@@ -3,7 +3,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 import numpy as np
 
+#The classic dataset for the iris classification problem
 iris_dataset = load_iris()
+
 
 print("Target names: {}".format(iris_dataset['target_names']))
 print("Feature names: {}".format(iris_dataset['feature_names']))
@@ -14,6 +16,7 @@ print("Type of target: {}".format(type(iris_dataset['target'])))
 print("Shape of target: {}".format(iris_dataset['target'].shape))
 print("Target:\n{}".format(iris_dataset['target']))
 
+#method for splitting our dataset into train samples and test samples
 X_train, X_test, y_train, y_test = train_test_split(iris_dataset['data'], iris_dataset['target'], random_state=0)
 
 print("X_train shape: {}".format(X_train.shape))
@@ -23,12 +26,16 @@ print("y_train shape: {}".format(y_train.shape))
 print("X_test shape: {}".format(X_test.shape))
 print("y_test shape: {}".format(y_test.shape))
 
+#K-nearest Neighbours classifier to make a prediction for a new data point 
 knn = KNeighborsClassifier(n_neighbors=1)
 
-knn.fit(X_train, y_train)
+knn.fit(X_train, y_train) 
+#fits the model using X_train as training data and y_train as target values
 
 X_new = np.array([[5, 2.9, 1, 0.2]])
 print("X_new.shape: {}".format(X_new.shape))
+
+#Predict the class labels for the provided data
 
 prediction = knn.predict(X_new)
 print("Prediction: {}".format(prediction))
@@ -36,5 +43,7 @@ print("Predicted target name: {}".format(iris_dataset['target_names'][prediction
 
 y_pred = knn.predict(X_test)
 print("Test set predictions:\n {}".format(y_pred))
+
+#checking the accuracy of the model
 print("Test set score (np.mean): {:.2f}".format(np.mean(y_pred == y_test)))
 print("Test set score (knn.score): {:.2f}".format(knn.score(X_test, y_test)))
